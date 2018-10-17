@@ -25,24 +25,27 @@ const RestaurantBookingService = {
      * @returns {*array} all travel history of travelModel
      */
     getRestauranBooking: (travelStepID) => {
-        console.log("ssss", travelStepID)
+
         let { cls } = Entities.restaurantBooking
         return new Promise((res, rej) => {
-            let whereClause = travelStepID ? `AND ${cls.traveStepID} = ${travelStepID}` : ''
+            let whereClause = travelStepID ? `AND ${cls.travelStepID} = ${travelStepID}` : ''
 
             connection.query(`SELECT * FROM ${Entities.restaurantBooking.name} WHERE 1 = 1 ${whereClause}`, (err, rs) => {
                 if (err) {
-                    rej(err)
-                }
-                let booking = rs.map(t => {
-                    return new RestaurantBooking(
-                        t[cls.id],
-                        t[cls.travelStepID],
-                        t[cls.restaurantID],
-                        t[cls.bookingTime])
-                })
+                   
+                    rej(err);
+                } else {
+                    let booking = rs.map(t => {
+                        return new RestaurantBooking(
+                            t[cls.id],
+                            t[cls.travelStepID],
+                            t[cls.restaurantID],
+                            t[cls.bookingTime])
+                    })
 
-                res(booking)
+                    res(booking)
+                }
+
             });
         })
     }

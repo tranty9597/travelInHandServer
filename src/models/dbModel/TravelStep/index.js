@@ -10,7 +10,7 @@ export default class TravelStep {
         startDate,
         endDate) {
             
-        this.id = id;
+        this.ID = id;
         this.travelID = travelID;
         this.fromCityID =fromCityID ;
         this.toCityID = toCityID;

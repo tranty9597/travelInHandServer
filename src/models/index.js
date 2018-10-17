@@ -1,5 +1,5 @@
 import { BaseResult } from "./apiModel";
 
-import { User, Travel, TravelStep, RestaurantBooking } from "./dbModel"
+import { Travel, User, TravelStep, RestaurantBooking, Nation, City, Transpotation, TravelLocation, Restaurant, Hotel, Image } from "./dbModel"
 
-export { BaseResult, User, Travel, TravelStep, RestaurantBooking };
+export { Travel, User, TravelStep, RestaurantBooking, Nation, City, Transpotation, TravelLocation, Restaurant, Hotel, Image , BaseResult};
