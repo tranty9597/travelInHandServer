@@ -1,12 +1,13 @@
 import express from "express"
 
-import * as travelStepController from "../controllers/travelStepController"
+import { TravelStepController } from "../../controllers"
 
-import { BaseResult } from "../models"
+import { BaseResult } from "../../models"
+
 const router = express.Router();
 
 router.get('/travelStep/get', async (req, res) => {
-    travelStepController.getTravelSteps(req).then(data =>{
+    TravelStepController.getTravelSteps(req).then(data =>{
         res.json(new BaseResult(
             200,
             "Success",
@@ -21,7 +22,7 @@ router.get('/travelStep/get', async (req, res) => {
     
 })
 router.post('/travelStep/create', async (req, res) => {
-    res.json(await travelStepController.createTravelStep(req, res))
+    res.json(await TravelStepController.createTravelStep(req, res))
 })
 
 export default router;
