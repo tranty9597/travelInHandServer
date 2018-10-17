@@ -25,6 +25,7 @@ const RestaurantBookingService = {
      * @returns {*array} all travel history of travelModel
      */
     getRestauranBooking: (travelStepID) => {
+        console.log("ssss", travelStepID)
         let { cls } = Entities.restaurantBooking
         return new Promise((res, rej) => {
             let whereClause = travelStepID ? `AND ${cls.traveStepID} = ${travelStepID}` : ''

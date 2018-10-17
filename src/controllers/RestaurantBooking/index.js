@@ -12,7 +12,7 @@ const RestaurantBookingController = {
     },
     getRestaurantBooking: async (req) => {
         return new Promise((res, rej) => {
-            RestaurantBookingService.getRestaurantBooking(req.query.travelStepID).then(rs => {
+            RestaurantBookingService.getRestauranBooking(req.query.travelStepID).then(rs => {
                 res(rs)
             }).catch(err => {
                 console.log(err)
