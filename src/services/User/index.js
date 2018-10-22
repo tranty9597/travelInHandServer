@@ -1,5 +1,6 @@
 
 import connection, { Entities } from "../../DbConnection"
+import { User } from "../../models";
 
 const UserService = {
     createUser: (user) => {
@@ -11,13 +12,22 @@ const UserService = {
         })
     },
 
-    getUser: () => {
+    login: (username, password) => {
+
         return new Promise((res, rej) => {
-            connection.query(`SELECT * FROM ${Entities.user.name}`, (err, rs, fields) => {
+            let { cls } = Entities.user
+            connection.query(`SELECT * FROM ${Entities.user.name} WHERE ${cls.username}='${username}' AND ${cls.password}='${password}'`, (err, rs, fields) => {
                 if (err) {
                     rej(err)
                 }
-                res(rs);
+
+                let user = rs[0]
+                if(user){
+                    res(new User(user[cls.username], user[cls.fullName], user[cls.phone], user[cls.email]));
+                }else{
+                    res()
+                }
+               
             });
         })
 

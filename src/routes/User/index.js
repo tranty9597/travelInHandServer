@@ -2,27 +2,20 @@ import express from "express"
 
 import { UserController } from "../../controllers"
 
-import { BaseResult } from "../../models"
+import { pathConfig } from "../../config";
 
 const router = express.Router();
 
-router.get('/user/get', async (req, res) => {
-    UserController.getUser().then(data =>{
-        res.json(new BaseResult(
-            200,
-            "Success",
-            data
-        ))
+router.post(pathConfig.user.login, async (req, res) => {
+    UserController.login(req, res).then(data =>{
+        res.json(data)
     }).catch(err =>{
-        res.json(new BaseResult(
-            ...err,
-            data
-        ))
+        res.json(err)
     })
 
     
 })
-router.post('/user/create', async (req, res) => {
+router.post(pathConfig.user.regiter, async (req, res) => {
     res.json(await UserController.createUser(req, res))
 })
 

@@ -1,25 +1,31 @@
 import { TravelService } from "../../services"
+import { BaseResult } from "../../models";
 
 const TravelController = {
-    createTravel: async (req, res) => {
+    createTravel: (req, res) => {
         const { body } = req;
 
         let { username, travelNm, travelDes, status } = body
-        return await TravelService.createTravel({
-            username,
-            travelNm,
-            travelDes,
-            status,
-            dateCreated: '2018-10-10'
-        })
+        return new Promise((res, rej) =>{
+            TravelService.createTravel({
+                username,
+                travelNm,
+                travelDes,
+                status,
+                dateCreated: '2018-10-10'
+            }).then(data =>{
+                res(new BaseResult(200, "success", false, data))
+            }).catch(err => {
+                rej(err)
+            })
+        }) 
     },
 
-    getTravels: async (req) => {
+    getTravels: (req) => {
         return new Promise((res, rej) => {
             TravelService.getTravels(req.query.username).then(rs => {
-                res(rs)
+                res(new BaseResult(200, "Success", false, rs))
             }).catch(err => {
-                console.log(err)
                 rej(err)
             })
         })

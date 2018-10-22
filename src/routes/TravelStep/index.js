@@ -1,28 +1,22 @@
 import express from "express"
 
 import { TravelStepController } from "../../controllers"
+import { errorHandle } from "../../utils";
 
-import { BaseResult } from "../../models"
 
 const router = express.Router();
 
-router.get('/travelStep/get', async (req, res) => {
-    TravelStepController.getTravelSteps(req).then(data =>{
-        res.json(new BaseResult(
-            200,
-            "Success",
-            data
-        ))
-    }).catch(err =>{
-        res.json(new BaseResult(
-            ...err
-        ))
-    })
+router.get('/api/travelStep/get', async (req, res) => {
+    TravelStepController.getTravelSteps(req).then(data => {
+        res.json(data)
+    }).catch(err => errorHandle.catchEx(err, res))
 
-    
+
 })
-router.post('/travelStep/create', async (req, res) => {
-    res.json(await TravelStepController.createTravelStep(req, res))
+router.post('/api/travelStep/create', async (req, res) => {
+    TravelStepController.createTravelStep(req, res).then(data => {
+        res.json(data)
+    }).catch(err => errorHandle.catchEx(err, res))
 })
 
 export default router;

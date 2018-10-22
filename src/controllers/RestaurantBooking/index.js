@@ -2,20 +2,27 @@ import { RestaurantBookingService } from "../../services"
 
 
 const RestaurantBookingController = {
-    createRestaurantBooking: async (req, res) => {
+    createRestaurantBooking: (req, res) => {
         const { body } = req;
 
         let { travelStepID, restaurantID, bookingTime } = body
-        return await RestaurantBookingService.createRestaurantBooking({
-            travelStepID, restaurantID, bookingTime
+
+        return new Promise((res, rej) =>{
+            RestaurantBookingService.createRestaurantBooking({
+                travelStepID, restaurantID, bookingTime
+            }).then(data =>{
+                res(new BaseResult(200, "success", false, data))
+            }).catch(err => {
+                rej(err)
+            })
         })
+         
     },
     getRestaurantBooking: async (req) => {
         return new Promise((res, rej) => {
-            RestaurantBookingService.getRestauranBooking(req.query.travelStepID).then(rs => {
-                res(rs)
+            RestaurantBookingService.getRestauranBooking(req.query.travelStepID).then(rs =>{
+                res(new BaseResult(200, "success", false, rs))
             }).catch(err => {
-                console.log(err)
                 rej(err)
             })
         })

@@ -1,7 +1,8 @@
-export default class BaseResult{
-    constructor(resultCode, message, data){
-        this.resultCode = resultCode;
-        this.message = message;
+import Result from "../Result";
+
+export default class BaseResult extends Result{
+    constructor(resultCode, message, isError, data){
+        super(resultCode, message, isError)
         this.data = data;
     }
 }

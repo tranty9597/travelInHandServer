@@ -1,7 +1,8 @@
 import { TraveStepService } from "../../services"
+import { BaseResult } from "../../models";
 
 const TravelStepController = {
-    createTravelStep: async (req, res) => {
+    createTravelStep: (req, res) => {
         const { body } = req;
 
         let {
@@ -13,22 +14,29 @@ const TravelStepController = {
             restaurantBookingID,
             startDate,
             endDate } = body
-        return await TraveStepService.createTravelStep({
-            travelID,
-            fromCityID,
-            toCityID,
-            tranpostationID,
-            hotelID,
-            restaurantBookingID,
-            startDate,
-            endDate
+        return new Promise((res, rej) => {
+            TraveStepService.createTravelStep({
+                travelID,
+                fromCityID,
+                toCityID,
+                tranpostationID,
+                hotelID,
+                restaurantBookingID,
+                startDate,
+                endDate
+            }).then(data => {
+                res(new BaseResult(200, "Success", false, data))
+            }).catch(err => {
+                rej(err)
+            })
         })
+
     },
-    
-    getTravelSteps: async (req) => {
+
+    getTravelSteps: (req) => {
         return new Promise((res, rej) => {
             TraveStepService.getTravelSteps(req.query.travelID).then(rs => {
-                res(rs)
+                res(new BaseResult(200, "success", false, rs))
             }).catch(err => {
                 rej(err)
             })

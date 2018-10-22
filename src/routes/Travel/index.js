@@ -1,28 +1,21 @@
 import express from "express"
 
 import { TravelController } from "../../controllers"
-
-import { BaseResult } from "../../models"
+import { errorHandle } from "../../utils";
 
 const router = express.Router();
 
-router.get('/travel/get', async (req, res) => {
-    TravelController.getTravels(req).then(data =>{
-        res.json(new BaseResult(
-            200,
-            "Success",
-            data
-        ))
-    }).catch(err =>{
-        res.json(new BaseResult(
-            ...err
-        ))
-    })
+router.get('/api/travel/get', (req, res) => {
+    TravelController.getTravels(req).then(data => {
+        res.json(data)
+    }).catch((err) => errorHandle.catchEx(err, res))
 
-    
+
 })
-router.post('/travel/create', async (req, res) => {
-    res.json(await TravelController.createTravel(req, res))
+router.post('/api/travel/create', (req, res) => {
+    TravelController.createTravel(req, res).then(data => {
+        res.json(data)
+    }).catch((err) => errorHandle.catchEx(err, res))
 })
 
 export default router;
