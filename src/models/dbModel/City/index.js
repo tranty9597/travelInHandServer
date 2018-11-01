@@ -1,7 +1,7 @@
 export default class City{
-    constructor(id, nationID, cityNM) {
+    constructor(id, nationID, cityNm) {
         this.ID = id;
         this.nationID = nationID,
-        this.cityNM = cityNM
+        this.cityNm = cityNm
     }
 }

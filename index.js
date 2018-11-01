@@ -20,7 +20,7 @@ app.use((req, res, next) => {
     next();
 })
 
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 4200
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());

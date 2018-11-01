@@ -1,6 +1,7 @@
 
 import connection, { Entities } from "../../DbConnection"
 import { TravelStep } from "../../models";
+import CityServices from "../City";
 
 function handleQueryRs(err, rs, res, rej) {
     if (err) {
@@ -33,11 +34,13 @@ const TravelStepServices = {
             let whereClause = travelID ? `AND ${cls.travelID} = ${travelID}` : ''
 
             connection.query(`SELECT * FROM ${Entities.travelStep.name} WHERE 1 = 1 ${whereClause}`, (err, rs) => {
+
                 if (err) {
                     rej(err)
                 }
-                let travels = rs.map(t => {
-                    return new TravelStep(
+
+                let result = rs.map(t => new Promise((resolve, reject) => {
+                    let step = new TravelStep(
                         t[cls.id],
                         t[cls.travelID],
                         t[cls.fromCityID],
@@ -46,11 +49,19 @@ const TravelStepServices = {
                         t[cls.hotelID],
                         t[cls.restaurantBookingID],
                         t[cls.startDate],
-                        t[cls.endDate]);
-                })
+                        t[cls.endDate],
+                        t[cls.status]
+                    );
 
-                res(travels)
-            });
+                    Promise.all([CityServices.getCity(t[cls.fromCityID]), CityServices.getCity(t[cls.toCityID])]).then(citys => {
+                        resolve({ ...step, fromCity: citys[0].cityNm, toCity: citys[1].cityNm })
+                    })
+
+                }))
+                Promise.all(result).then(data => {
+                    res(data)
+                })
+            })
         })
     }
 }

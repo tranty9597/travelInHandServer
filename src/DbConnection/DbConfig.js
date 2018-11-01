@@ -39,7 +39,8 @@ export const Entities = {
             hotelID: "HOTEL_ID",
             restaurantBookingID: "RESTAURANT_BOOKING_ID",
             startDate: "START_DATE",
-            endDate: "END_DATE"
+            endDate: "END_DATE",
+            status: "STATUS"
         }
     },
     restaurantBooking: {
