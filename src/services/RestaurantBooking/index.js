@@ -1,7 +1,6 @@
 
 import connection, { Entities } from "../../DbConnection"
 import { RestaurantBooking } from "../../models";
-
 function handleQueryRs(err, rs, res, rej) {
     if (err) {
         rej(err)

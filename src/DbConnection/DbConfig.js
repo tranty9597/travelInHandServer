@@ -75,7 +75,7 @@ export const Entities = {
             id: "ID",
             fromCityID: "FROM_CITY_ID",
             toCityID: "TO_CITY_ID",
-            toTravelLocationID: "TO_TRAVEL_LOCATION_ID",
+            travelLocationID: "TRAVEL_LOCATION_ID",
             transpotationNm: "TRANSPOTATION_NM",
             phone: "PHONE",
             openTime: "OPEN_TIME",

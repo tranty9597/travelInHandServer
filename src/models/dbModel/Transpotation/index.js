@@ -1,9 +1,9 @@
 export default class Transpotation {
-    constructor(id, fromCityID, toCityID, toTravelLocationID, transpotationNm, phone, openTime, timeDistance) {
+    constructor(id, fromCityID, toCityID, travelLocationID, transpotationNm, phone, openTime, timeDistance) {
         this.ID = id;
         this.fromCityID = fromCityID;
         this.toCityID = toCityID;
-        this.toTravelLocationID = toTravelLocationID;
+        this.travelLocationID = travelLocationID;
         this.transpotationNm = transpotationNm;
         this.phone = phone;
         this.openTime = openTime;

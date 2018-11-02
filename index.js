@@ -7,7 +7,7 @@ import { jwtMiddleware } from "./src/middleware"
 import connection from "./src/DbConnection"
 import { errorHandle } from "./src/utils"
 
-import { User, Travel, TravelStep, RestaurantBooking, Image } from "./src/routes"
+import { User, Travel, TravelStep, RestaurantBooking, Image, Hotel, Restaurant } from "./src/routes"
 
 
 const app = express();
@@ -30,6 +30,8 @@ app.use("/", Travel)
 app.use("/", TravelStep)
 app.use("/", RestaurantBooking)
 app.use("/", Image)
+app.use("/", Hotel)
+app.use("/", Restaurant)
 
 app.use(errorHandle.errorHandlerTopLevel)
 app.listen(port)
