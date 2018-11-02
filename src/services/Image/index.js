@@ -9,23 +9,16 @@ const ImageServices = {
      * @returns {*array} all travel history of travelModel
      */
     getImageByOwnerId: (ownerID) => {
-        let { cls } = Entities.image
         return new Promise((res, rej) => {
+            let { cls } = Entities.image
+            let whereClause = `AND ${cls.ownerID} = '${ownerID}'`
 
-            let whereClause = `AND ${cls.ownerID} = ${ownerID}`
-
-            connection.query(`SELECT * FROM ${Entities.travel.name} WHERE 1 = 1 ${whereClause}`, (err, rs) => {
+            connection.query(`SELECT * FROM ${Entities.image.name} WHERE 1 = 1 ${whereClause}`, (err, rs) => {
                 if (err) {
                     rej(err)
                 }
 
-                res(rs.map(t => {
-                    return new Image(
-                        t[cls.id],
-                        t[cls.ownerID],
-                        t[cls.data]
-                    );
-                }))
+                res(rs.map(t => t[cls.id]))
             });
         })
     },

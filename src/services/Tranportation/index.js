@@ -1,13 +1,9 @@
 
 import connection, { Entities } from "../../DbConnection"
 import { Transpotation } from "../../models";
+import ImageServices from '../Image'
 
-function handleQueryRs(err, rs, res, rej) {
-    if (err) {
-        rej(err)
-    }
-    res(rs);
-}
+
 const TranportationService = {
     /**
      * 
@@ -49,8 +45,7 @@ const TranportationService = {
                     rej(err)
                 }
                 let t = rs[0]
-                res(
-                    new Transpotation(
+                let transpotation = new Transpotation(
                         t[cls.id],
                         t[cls.fromCityID],
                         t[cls.toCityID],
@@ -58,9 +53,11 @@ const TranportationService = {
                         t[cls.transpotationNm],
                         t[cls.phone],
                         t[cls.openTime],
-                        t[cls.timeDistance]
-                    )
-                )
+                        t[cls.timeDistance])
+
+                ImageServices.getImageByOwnerId(t[cls.id]).then(images =>{
+                    res({...transpotation, images})
+                })
             });
         })
     }

@@ -2,12 +2,8 @@
 import connection, { Entities } from "../../DbConnection"
 import { Hotel } from "../../models";
 
-function handleQueryRs(err, rs, res, rej) {
-    if (err) {
-        rej(err)
-    }
-    res(rs);
-}
+import ImageServices from '../Image'
+
 const HotelServices = {
     getHotelByCityOrLocation: (cityID, locationID) => {
         return new Promise((res, rej) => {
@@ -38,13 +34,16 @@ const HotelServices = {
                     rej(err)
                 } else {
                     let t = rs[0];
-                    res(new Hotel(
+                    let hotel = new Hotel(
                         t[cls.id],
                         t[cls.hotelNm],
                         t[cls.cityID],
                         t[cls.phone],
                         t[cls.travelLocationID]
-                    ))
+                    );
+                    ImageServices.getImageByOwnerId(t[cls.id]).then(images =>{
+                        res({...hotel, images})
+                    })
                 }
             })
         })

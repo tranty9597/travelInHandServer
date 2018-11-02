@@ -18,7 +18,7 @@ const TravelStepServices = {
 
             let queryInst = `INSERT INTO ${Entities.travelStep.name} (${cls.travelID}, ${cls.fromCityID}, ${cls.toCityID}, `
                 + `${cls.tranpostationID}, ${cls.hotelID}, ${cls.restaurantBookingID},${cls.startDate},${cls.endDate})`
-                + ` VALUES(${travelStepModel.travelID}, ${travelStepModel.fromCityID}, ${travelStepModel.toCityID}, `
+                + ` VALUES(${travelStepModel.travelID}, '${travelStepModel.fromCityID}', '${travelStepModel.toCityID}', `
                 + ` '${travelStepModel.tranpostationID}', '${travelStepModel.hotelID}', ${travelStepModel.restaurantBookingID}, `
                 + `'${travelStepModel.startDate}', '${travelStepModel.endDate}')`
             console.log("ddd", queryInst)

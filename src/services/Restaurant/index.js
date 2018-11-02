@@ -1,6 +1,7 @@
 
 import connection, { Entities } from "../../DbConnection"
 import { Restaurant } from "../../models";
+import ImageServices from '../Image'
 
 const RestaurantServices = {
     getRestaurantByCityOrLocation: (cityID, locationID) => {
@@ -32,13 +33,16 @@ const RestaurantServices = {
                     rej(err)
                 } else {
                     let t = rs[0];
-                    res(new Restaurant(
+                    let restaurant = new Restaurant(
                         t[cls.id],
                         t[cls.cityID],
                         t[cls.restaurantNm],
                         t[cls.phone],
                         t[cls.travelLocationID]
-                    ))
+                    )
+                    ImageServices.getImageByOwnerId(t[cls.id]).then(images =>{
+                        res({...restaurant, images})
+                    })
                 }
             })
         })
