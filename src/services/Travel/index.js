@@ -14,8 +14,7 @@ const TravelService = {
         return new Promise((res, rej) => {
 
             let queryInst = `INSERT INTO ${Entities.travel.name} (${cls.username}, ${cls.dateCreated}, ${cls.travelNm}, ${cls.travelDes}, ${cls.status})`
-                + ` VALUES('${travelModel.username}', '${travelModel.dateCreated}', '${travelModel.travelNm}', '${travelModel.travelDes}', ${travelModel.status})`
-            console.log("ddd", queryInst)
+                + ` VALUES('${travelModel.username}', '${travelModel.dateCreated}', '${travelModel.travelNm}', '${travelModel.travelDes}', 0)`
             connection.query(queryInst, (err, rs, fields) => handleQueryRs(err, rs, res, rej))
         })
     },

@@ -5,14 +5,13 @@ const TravelController = {
     createTravel: (req, res) => {
         const { body } = req;
 
-        let { username, travelNm, travelDes, status } = body
+        let { username, travelNm, travelDes, dateCreated } = body
         return new Promise((res, rej) =>{
             TravelService.createTravel({
                 username,
                 travelNm,
                 travelDes,
-                status,
-                dateCreated: '2018-10-10'
+                dateCreated
             }).then(data =>{
                 res(new BaseResult(200, "success", false, data))
             }).catch(err => {
