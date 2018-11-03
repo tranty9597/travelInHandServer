@@ -10,11 +10,12 @@ const TranportationService = {
      * @param {*string} username
      * @returns {*array} all travel history of travelModel
      */
-    getTransportation: (fromCityID, toCityID) => {
+    getTransportation: (fromCityID, toCityID, locationID) => {
         let { cls } = Entities.transpotation
         return new Promise((res, rej) => {
 
-            let whereClause = `AND ${cls.fromCityID} = ${fromCityID} AND ${cls.toCityID} = ${toCityID}`
+            let whereClause = locationID ?`AND ${cls.travelLocationID} = '${locationID}'` 
+                : `AND ${cls.fromCityID} = '${fromCityID}' AND ${cls.toCityID} = '${toCityID}'`
 
             connection.query(`SELECT * FROM ${Entities.transpotation.name} WHERE 1 = 1 ${whereClause}`, (err, rs) => {
                 if (err) {
@@ -36,6 +37,7 @@ const TranportationService = {
             });
         })
     },
+    
     getTransportationById: (id) => {
         return new Promise((res, rej) => {
             let { cls } = Entities.transpotation
