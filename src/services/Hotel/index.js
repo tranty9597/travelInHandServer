@@ -8,8 +8,8 @@ const HotelServices = {
     getHotelByCityOrLocation: (cityID, locationID) => {
         return new Promise((res, rej) => {
             let { cls } = Entities.hotel
-            let whereClause = cityID ? `AND ${cls.cityID} = ${cityID}` : ""
-            whereClause += locationID ? `AND ${cls.travelLocationID} = ${locationID}` : ''
+            let whereClause = cityID ? `AND ${cls.cityID} = '${cityID}'` : ""
+            whereClause += locationID ? `AND ${cls.travelLocationID} = '${locationID}'` : ''
             connection.query(`SELECT * FROM ${Entities.hotel.name} WHERE 1 = 1 ${whereClause}`, (err, rs) => {
                 if (err) {
                     rej(err)
