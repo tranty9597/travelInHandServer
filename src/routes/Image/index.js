@@ -17,7 +17,7 @@ router.post('/api/image/upload', (req, res) => {
 
     ImageController.uploadImage(req, res).then(data => {
         res.json(data)
-    }).catch(err => errorHandle.catchEx(err, res))
+    }).catch(err => res.json(err))
 })
 
 export default router;

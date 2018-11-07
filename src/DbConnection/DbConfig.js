@@ -134,5 +134,5 @@ export const Configs = {
     host: "localhost",
     user: "root",
     password: "root@12345",
-    database: "TravelInHand"
+    database: "TravelInHandPRod"
 }

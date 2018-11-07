@@ -60,7 +60,13 @@ const TravelStepServices = {
                         CityServices.getCityByID(t[cls.fromCityID]),
                         CityServices.getCityByID(t[cls.toCityID])
                     ]).then(values => {
-                        resolve({ ...step, fromCity: values[0].cityNm, toCity: values[1].cityNm })
+                        let imageID;
+                        if(values[1].images.length > 0){
+                            imageID = values[1].images[0]
+                        }else{
+                            imageID = 1
+                        }
+                        resolve({ ...step, fromCity: values[0].cityNm, toCity: values[1].cityNm, imageID })
                     })
 
                 }))
@@ -71,17 +77,15 @@ const TravelStepServices = {
         })
     },
     getStepDetail: (id) => {
-
         return new Promise((res, rej) => {
-            let { cls } = Entities.TravelStep;
-            console.log("rs==========", id)
+            
+            let { cls } = Entities.travelStep;
             let whereClause = `AND ${cls.id} = ${id}`
             connection.query(`SELECT * FROM ${Entities.travelStep.name} WHERE 1 = 1 ${whereClause}`, (err, rs) => {
 
                 if (err) {
                     rej(err)
                 }
-                console.log("rs==========", rs)
                 let t = rs[0]
                 res(new Promise((resolve, reject) => {
                     let step = new TravelStep(
@@ -104,10 +108,8 @@ const TravelStepServices = {
                         HotelServices.getHotelById(t[cls.hotelID])
                     ]).then(values => {
 
-                        console.log("values==========", values)
                         resolve({ ...step, fromCity: values[0], toCity: values[1], tranpostation: values[2], hotel: values[3] })
                     }).catch(err => {
-                        console.log("sss", err)
                         rej(err)
                     })
 
