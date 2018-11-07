@@ -71,7 +71,7 @@ const TravelStepServices = {
         })
     },
     getStepDetail: (id) => {
-       
+
         return new Promise((res, rej) => {
             let { cls } = Entities.TravelStep;
             console.log("rs==========", id)
@@ -106,7 +106,7 @@ const TravelStepServices = {
 
                         console.log("values==========", values)
                         resolve({ ...step, fromCity: values[0], toCity: values[1], tranpostation: values[2], hotel: values[3] })
-                    }).catch(err =>{
+                    }).catch(err => {
                         console.log("sss", err)
                         rej(err)
                     })
@@ -119,11 +119,11 @@ const TravelStepServices = {
     getHistoryStepDetail: (id) => {
 
         return new Promise((res, rej) => {
-            
+
             let { cls } = Entities.historystepdetail;
             let whereClause = id ? `AND TRAVEL_ID = ${id}` : ''
             try {
-            connection.query(`SELECT * FROM 
+                connection.query(`SELECT * FROM 
             (select ts.ID, ts.TRAVEL_ID, 
                 (select CITY_NM from city where ID = ts.FROM_CITY_ID) as FROMCITYNM,
                 (select CITY_NM from city where ID = ts.TO_CITY_ID) as TOCITYNM,
@@ -135,28 +135,26 @@ const TravelStepServices = {
                 left join restaurant_booking rb on ts.RESTAURANT_BOOKING_ID = rb.ID
                 left join restaurant rs on rb.RESTAURANT_ID = rs.ID) HISTORYDETAIL
             WHERE 1 = 1 ${whereClause}`, (err, rs) => {
-                if (err) {
-                    rej(err)
-                }
-                let result = rs.map(t => new Promise((resolve, reject) => {
-                    let historyStepDetail = new HistoryStepDetail(
-                        t[cls.id], 
-                        t[cls.travel_id], t[cls.fromCityNm],
-                        t[cls.toCityNm], t[cls.tranpostationNm],
-                        t[cls.hotelNm], t[cls.restaurantNm],
-                        t[cls.startDate], t[cls.endDate]
-                    );
-                    resolve({ ...historyStepDetail})
-                }))
-                Promise.all(result).then(data => {
-                    res(data)
-                })
-            });
-        } catch(Exception) {
-            console.log(Exception);
-            console.log("loi cmnr");
-        }
-            console.log("End sql");
+                        if (err) {
+                            rej(err)
+                        }
+                        let result = rs.map(t => new Promise((resolve, reject) => {
+                            let historyStepDetail = new HistoryStepDetail(
+                                t[cls.id],
+                                t[cls.travel_id], t[cls.fromCityNm],
+                                t[cls.toCityNm], t[cls.tranpostationNm],
+                                t[cls.hotelNm], t[cls.restaurantNm],
+                                t[cls.startDate], t[cls.endDate]
+                            );
+                            resolve({ ...historyStepDetail })
+                        }))
+                        Promise.all(result).then(data => {
+                            res(data)
+                        })
+                    });
+            } catch (err) {
+                rej(err)
+            }
         })
     }
 }

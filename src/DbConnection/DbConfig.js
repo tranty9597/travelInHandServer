@@ -132,6 +132,6 @@ export const Entities = {
 export const Configs = {
     host: "localhost",
     user: "root",
-    password: "Davisjane3#",
+    password: "root@12345",
     database: "TravelInHand"
 }
