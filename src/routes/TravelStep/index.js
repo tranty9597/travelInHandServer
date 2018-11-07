@@ -18,6 +18,12 @@ router.get('/api/travelStep/getDetail', (req, res) => {
     }).catch(err => res.json(err))
 })
 
+router.get('/api/travelStep/getHistoryDetail', (req, res) => {
+    TravelStepController.getHistoryStepDetail(req).then(data => {
+        res.json(data)
+    }).catch(err => res.json(err))
+})
+
 router.post('/api/travelStep/create', (req, res) => {
     TravelStepController.createTravelStep(req, res).then(data => {
         res.json(data)

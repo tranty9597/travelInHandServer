@@ -50,6 +50,16 @@ const TravelStepController = {
                 rej(err)
             })
         })
+    },
+
+    getHistoryStepDetail: (req) => {
+        return new Promise((res, rej) => {
+            TraveStepService.getHistoryStepDetail(req.query.id).then(data => {
+                res(new BaseResult(200, "success", false, data))
+            }).catch(err => {
+                rej(err)
+            })
+        })
     }
 }
 
