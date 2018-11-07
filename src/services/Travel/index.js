@@ -1,6 +1,8 @@
 
 import connection, { Entities } from "../../DbConnection"
 import { Travel } from "../../models";
+import  TravelStepServices  from "../TravelStep";
+
 
 function handleQueryRs(err, rs, res, rej) {
     if (err) {
@@ -9,7 +11,7 @@ function handleQueryRs(err, rs, res, rej) {
     res(rs);
 }
 const TravelService = {
-    changeStatus: (id, status) =>{
+    changeStatus: (id, status) => {
         let { cls } = Entities.travel
         return new Promise((res, rej) => {
 
@@ -48,13 +50,18 @@ const TravelService = {
                     rej(err)
                 }
 
-                let travels = rs.map(t => {
-                    return new Travel(t[cls.id], t[cls.username], t[cls.dateCreated], t[cls.travelNm], t[cls.travelDes], t[cls.status]);
-                })
+                let travels = rs.map(t => new Promise((reso, reje) => {
+                  let tr = new Travel(t[cls.id], t[cls.username], t[cls.dateCreated], t[cls.travelNm], t[cls.travelDes], t[cls.status]);
+                
+                  TravelStepServices.getPriceAllStep(tr.ID).then(v =>{
+                      reso({...tr, total: v})
+                  })
+                  
+                }))
 
-                res(travels)
+                Promise.all(travels).then(vs => res(vs))
             });
-            
+
         })
     },
     getActiveTravel: (username) => {
@@ -74,7 +81,7 @@ const TravelService = {
 
                 res(travels[0])
             });
-            
+
         })
     }
 

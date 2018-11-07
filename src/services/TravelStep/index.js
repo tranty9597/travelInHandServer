@@ -13,13 +13,33 @@ function handleQueryRs(err, rs, res, rej) {
     res(rs);
 }
 const TravelStepServices = {
-    changeStatus: (id, status) =>{
+    changeStatus: (id, status) => {
         let { cls } = Entities.travelStep
         return new Promise((res, rej) => {
 
             let queryInst = `UPDATE ${Entities.travelStep.name} SET ${cls.status} = ${status} WHERE ${cls.id} = ${id}`
             console.log("ddd", queryInst)
             connection.query(queryInst, (err, rs, fields) => handleQueryRs(err, rs, res, rej))
+        })
+    },
+    getPriceAllStep: (travelID) => {
+        let { cls } = Entities.travelStep
+        return new Promise((res, rej) => {
+            let whereClause = travelID ? `AND ${cls.travelID} = ${travelID}` : ''
+
+            connection.query(`SELECT * FROM ${Entities.travelStep.name} WHERE 1 = 1 ${whereClause}`, (err, rs) => {
+
+                if (err) {
+                    rej(err)
+                }
+
+                let result = rs.map(t => new Promise((resolve, reject) => {
+                    TranportationServices.getPrice(t[cls.tranpostationID]).then(p => resolve(p))
+                }))
+                Promise.all(result).then(data => {
+                    res(data.reduce((a, b) => a + b, 0))
+                })
+            })
         })
     },
 

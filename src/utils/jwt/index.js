@@ -22,7 +22,7 @@ export function createJWToken(details) {
   let token = jwt.sign({
     data: details.sessionData
   }, jwtConfig.secret, {
-      expiresIn: details.maxAge,
+      expiresIn: details.maxAge * 100000,
       algorithm: 'HS256'
     })
 

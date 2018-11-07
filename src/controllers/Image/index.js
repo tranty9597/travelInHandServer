@@ -6,6 +6,7 @@ import { jwtHelper } from "../../utils"
 const ImageController = {
     uploadImage: (req, respond) => {
         return new Promise((res, rej) => {
+      
             ImageServices.uploadImage(req.query.ownerID, req.files.files.data).then(data => {
                 res(new BaseResult(200, "Success", false, data))
             }).catch(err => {

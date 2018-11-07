@@ -39,7 +39,19 @@ const TranportationService = {
             });
         })
     },
-    
+    getPrice: (id) => {
+        return new Promise((res, rej) => {
+            let { cls } = Entities.transpotation
+            let whereClause = `AND ${cls.id} = '${id}'`
+            connection.query(`SELECT * FROM ${Entities.transpotation.name} WHERE 1 = 1 ${whereClause}`, (err, rs) => {
+                if (err) {
+                    rej(err)
+                }
+                let t = rs[0]
+                res(t[cls.price])
+            });
+        })
+    },
     getTransportationById: (id) => {
         return new Promise((res, rej) => {
             let { cls } = Entities.transpotation
