@@ -61,9 +61,9 @@ const TravelStepServices = {
                         CityServices.getCityByID(t[cls.toCityID])
                     ]).then(values => {
                         let imageID;
-                        if(values[1].images.length > 0){
+                        if (values[1].images.length > 0) {
                             imageID = values[1].images[0]
-                        }else{
+                        } else {
                             imageID = 1
                         }
                         resolve({ ...step, fromCity: values[0].cityNm, toCity: values[1].cityNm, imageID })
@@ -78,7 +78,7 @@ const TravelStepServices = {
     },
     getStepDetail: (id) => {
         return new Promise((res, rej) => {
-            
+
             let { cls } = Entities.travelStep;
             let whereClause = `AND ${cls.id} = ${id}`
             connection.query(`SELECT * FROM ${Entities.travelStep.name} WHERE 1 = 1 ${whereClause}`, (err, rs) => {
@@ -105,10 +105,18 @@ const TravelStepServices = {
                         CityServices.getCityByID(t[cls.fromCityID]),
                         CityServices.getCityByID(t[cls.toCityID]),
                         TranportationServices.getTransportationById(t[cls.tranpostationID]),
-                        HotelServices.getHotelById(t[cls.hotelID])
+                        HotelServices.getHotelById(t[cls.hotelID]),
+                        RestaurantBookingServices.getRestauranBooking(step.travelID)
                     ]).then(values => {
 
-                        resolve({ ...step, fromCity: values[0], toCity: values[1], tranpostation: values[2], hotel: values[3] })
+                        resolve({
+                            ...step,
+                            fromCity: values[0],
+                            toCity: values[1],
+                            tranpostation: values[2],
+                            hotel: values[3],
+                            restaurantBooking: values[4]
+                        })
                     }).catch(err => {
                         rej(err)
                     })

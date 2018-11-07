@@ -15,7 +15,12 @@ const TravelService = {
 
             let queryInst = `INSERT INTO ${Entities.travel.name} (${cls.username}, ${cls.dateCreated}, ${cls.travelNm}, ${cls.travelDes}, ${cls.status})`
                 + ` VALUES('${travelModel.username}', '${travelModel.dateCreated}', '${travelModel.travelNm}', '${travelModel.travelDes}', 0)`
-            connection.query(queryInst, (err, rs, fields) => handleQueryRs(err, rs, res, rej))
+            connection.query(queryInst, (err, rs, fields) => {
+                if (err) {
+                    rej(err)
+                }
+                res(rs);
+            })
         })
     },
     /**
