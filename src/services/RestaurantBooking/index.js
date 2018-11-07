@@ -14,7 +14,6 @@ const RestaurantBookingService = {
 
             let queryInst = `INSERT INTO ${Entities.restaurantBooking.name} (${cls.travelStepID}, ${cls.restaurantID}, ${cls.bookingTime})`
                 + ` VALUES(${booking.travelStepID}, '${booking.restaurantID}', '${booking.bookingTime}')`
-            console.log("ddd=========", queryInst)
             connection.query(queryInst, (err, rs) => handleQueryRs(err, rs, res, rej))
         })
     },
@@ -31,7 +30,6 @@ const RestaurantBookingService = {
 
             connection.query(`SELECT * FROM ${Entities.restaurantBooking.name} WHERE 1 = 1 ${whereClause}`, (err, rs) => {
                 if (err) {
-                   
                     rej(err);
                 } else {
                     let booking = rs.map(t => {

@@ -15,7 +15,8 @@ import {
     RestaurantBooking,
     Image,
     Hotel,
-    Restaurant
+    Restaurant,
+    City
 } from "./src/routes"
 
 
@@ -42,6 +43,7 @@ app.use("/", Image)
 app.use("/", Hotel)
 app.use("/", Restaurant)
 app.use("/", Transportation)
+app.use("/", City)
 
 app.use(errorHandle.errorHandlerTopLevel)
 app.listen(port)

@@ -6,5 +6,6 @@ import ImageController from "./Image"
 import HotelController from "./Hotel"
 import RestaurantController from "./Restaurant"
 import TransportationController from "./Transportation"
+import CityController from "./City"
 
-export{TransportationController, RestaurantBookingController, TravelController, UserController, TravelStepController, ImageController, HotelController, RestaurantController}
+export { CityController, TransportationController, RestaurantBookingController, TravelController, UserController, TravelStepController, ImageController, HotelController, RestaurantController }

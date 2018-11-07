@@ -6,5 +6,6 @@ import Image from "./Image"
 import Hotel from "./Hotel"
 import Restaurant from "./Restaurant"
 import Transportation from "./Transportation"
+import City from "./City"
 
-export { RestaurantBooking, Travel, User, TravelStep, Image, Hotel, Restaurant, Transportation }
+export { City, RestaurantBooking, Travel, User, TravelStep, Image, Hotel, Restaurant, Transportation }
