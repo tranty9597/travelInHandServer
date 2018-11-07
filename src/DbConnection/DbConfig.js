@@ -133,6 +133,6 @@ export const Entities = {
 export const Configs = {
     host: "localhost",
     user: "root",
-    password: "12345678",
+    password: "root@12345",
     database: "TravelInHand"
 }
