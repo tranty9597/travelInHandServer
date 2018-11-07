@@ -56,8 +56,8 @@ const TravelStepServices = {
                     );
 
                     Promise.all([
-                        CityServices.getCity(t[cls.fromCityID]),
-                        CityServices.getCity(t[cls.toCityID])
+                        CityServices.getCityByID(t[cls.fromCityID]),
+                        CityServices.getCityByID(t[cls.toCityID])
                     ]).then(values => {
                         resolve({ ...step, fromCity: values[0].cityNm, toCity: values[1].cityNm })
                     })
@@ -94,8 +94,8 @@ const TravelStepServices = {
                     )
 
                     Promise.all([
-                        CityServices.getCity(t[cls.fromCityID]),
-                        CityServices.getCity(t[cls.toCityID]),
+                        CityServices.getCityByID(t[cls.fromCityID]),
+                        CityServices.getCityByID(t[cls.toCityID]),
                         TranportationServices.getTransportationById(t[cls.tranpostationID]),
                         HotelServices.getHotelById(t[cls.hotelID])
                     ]).then(values => {
