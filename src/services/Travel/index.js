@@ -40,6 +40,7 @@ const TravelService = {
 
                 res(travels)
             });
+            
         })
     }
 }

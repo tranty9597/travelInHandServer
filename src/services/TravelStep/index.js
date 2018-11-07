@@ -1,9 +1,10 @@
 
 import connection, { Entities } from "../../DbConnection"
-import { TravelStep } from "../../models";
+import { TravelStep, RestaurantBooking, HistoryStepDetail } from "../../models";
 import CityServices from "../City";
 import TranportationServices from "../Tranportation";
 import HotelServices from "../Hotel";
+import RestaurantBookingServices from "../RestaurantBooking";
 
 function handleQueryRs(err, rs, res, rej) {
     if (err) {
@@ -70,14 +71,17 @@ const TravelStepServices = {
         })
     },
     getStepDetail: (id) => {
-        let { cls } = Entities.travelStep
+       
         return new Promise((res, rej) => {
+            let { cls } = Entities.TravelStep;
+            console.log("rs==========", id)
             let whereClause = `AND ${cls.id} = ${id}`
             connection.query(`SELECT * FROM ${Entities.travelStep.name} WHERE 1 = 1 ${whereClause}`, (err, rs) => {
 
                 if (err) {
                     rej(err)
                 }
+                console.log("rs==========", rs)
                 let t = rs[0]
                 res(new Promise((resolve, reject) => {
                     let step = new TravelStep(
@@ -99,11 +103,60 @@ const TravelStepServices = {
                         TranportationServices.getTransportationById(t[cls.tranpostationID]),
                         HotelServices.getHotelById(t[cls.hotelID])
                     ]).then(values => {
+
+                        console.log("values==========", values)
                         resolve({ ...step, fromCity: values[0], toCity: values[1], tranpostation: values[2], hotel: values[3] })
+                    }).catch(err =>{
+                        console.log("sss", err)
+                        rej(err)
                     })
 
                 }))
             })
+        })
+    },
+
+    getHistoryStepDetail: (id) => {
+
+        return new Promise((res, rej) => {
+            
+            let { cls } = Entities.historystepdetail;
+            let whereClause = id ? `AND TRAVEL_ID = ${id}` : ''
+            try {
+            connection.query(`SELECT * FROM 
+            (select ts.ID, ts.TRAVEL_ID, 
+                (select CITY_NM from city where ID = ts.FROM_CITY_ID) as FROMCITYNM,
+                (select CITY_NM from city where ID = ts.TO_CITY_ID) as TOCITYNM,
+                tr.TRANSPOTATION_NM, ht.HOTEL_NM as HOTEMNM, rs.RESTAURANT_NM as RESTAURANTNM, ts.START_DATE, ts.END_DATE
+                from travel_step ts
+                left join city ct on ts.FROM_CITY_ID = ct.ID AND ts.TO_CITY_ID = ct.ID
+                left join transpotation tr on ts.TRANPOSTATION_ID = tr.ID
+                left join hotel ht on ts.HOTEL_ID = ht.ID
+                left join restaurant_booking rb on ts.RESTAURANT_BOOKING_ID = rb.ID
+                left join restaurant rs on rb.RESTAURANT_ID = rs.ID) HISTORYDETAIL
+            WHERE 1 = 1 ${whereClause}`, (err, rs) => {
+                if (err) {
+                    rej(err)
+                }
+                let result = rs.map(t => new Promise((resolve, reject) => {
+                    let historyStepDetail = new HistoryStepDetail(
+                        t[cls.id], 
+                        t[cls.travel_id], t[cls.fromCityNm],
+                        t[cls.toCityNm], t[cls.tranpostationNm],
+                        t[cls.hotelNm], t[cls.restaurantNm],
+                        t[cls.startDate], t[cls.endDate]
+                    );
+                    resolve({ ...historyStepDetail})
+                }))
+                Promise.all(result).then(data => {
+                    res(data)
+                })
+            });
+        } catch(Exception) {
+            console.log(Exception);
+            console.log("loi cmnr");
+        }
+            console.log("End sql");
         })
     }
 }

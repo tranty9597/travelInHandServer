@@ -110,6 +110,21 @@ export const Entities = {
             ownerID: "OWNER_ID",
             data: "DATA"
         }
+    },
+
+    historystepdetail: {
+        name: "HISTORYSTEPDETAIL",
+        cls: {
+            id: "ID",
+            travel_id: "TRAVEL_ID",
+            fromCityNm: "FROMCITYNM",
+            toCityNm: "TOCITYNM",
+            tranpostationNm: "TRANSPOTATION_NM",
+            hotelNm: "HOTEMNM",
+            restaurantNm: "RESTAURANTNM",
+            startDate: "START_DATE",
+            endDate: "END_DATE"
+        }
     }
 
 }
@@ -117,6 +132,6 @@ export const Entities = {
 export const Configs = {
     host: "localhost",
     user: "root",
-    password: "root@12345",
+    password: "Davisjane3#",
     database: "TravelInHand"
 }

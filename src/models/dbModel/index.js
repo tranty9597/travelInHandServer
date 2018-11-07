@@ -20,6 +20,8 @@ import Hotel from "./Hotel";
 
 import Image from "./Image";
 
+import HistoryStepDetail from "./HistoryStepDetail";
 
 
-export { Travel, User, TravelStep, RestaurantBooking, Nation, City, Transpotation, TravelLocation, Restaurant, Hotel, Image }
+
+export { Travel, User, TravelStep, RestaurantBooking, Nation, City, Transpotation, TravelLocation, Restaurant, Hotel, Image, HistoryStepDetail }
