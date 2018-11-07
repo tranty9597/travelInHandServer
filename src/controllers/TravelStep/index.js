@@ -32,6 +32,15 @@ const TravelStepController = {
         })
 
     },
+    changeStatus: (req) =>{
+        return new Promise((res, rej) => {
+            TraveStepService.changeStatus(req.query.ID, req.query.status).then(data => {
+                res(new BaseResult(200, "Success", false, data))
+            }).catch(err => {
+                rej(err)
+            })
+        })
+    },
 
     getTravelSteps: (req) => {
         return new Promise((res, rej) => {

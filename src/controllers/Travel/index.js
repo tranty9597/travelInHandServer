@@ -19,6 +19,15 @@ const TravelController = {
             })
         }) 
     },
+    changeStatus: (req) =>{
+        return new Promise((res, rej) => {
+            TravelService.changeStatus(req.query.ID, req.query.status).then(data => {
+                res(new BaseResult(200, "Success", false, data))
+            }).catch(err => {
+                rej(err)
+            })
+        })
+    },
 
     getTravels: (req) => {
         return new Promise((res, rej) => {

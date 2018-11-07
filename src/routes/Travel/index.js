@@ -17,4 +17,10 @@ router.post('/api/travel/create', (req, res) => {
     }).catch((err) => res.json(err))
 })
 
+router.put('/api/travel/changeStatus', (req, res) => {
+    TravelController.changeStatus(req, res).then(data => {
+        res.json(data)
+    }).catch(err => res.json(err))
+})
+
 export default router;

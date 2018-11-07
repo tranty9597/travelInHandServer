@@ -13,6 +13,16 @@ function handleQueryRs(err, rs, res, rej) {
     res(rs);
 }
 const TravelStepServices = {
+    changeStatus: (id, status) =>{
+        let { cls } = Entities.travelStep
+        return new Promise((res, rej) => {
+
+            let queryInst = `UPDATE ${Entities.travelStep.name} SET ${cls.status} = ${status} WHERE ${cls.id} = ${id}`
+            console.log("ddd", queryInst)
+            connection.query(queryInst, (err, rs, fields) => handleQueryRs(err, rs, res, rej))
+        })
+    },
+
     createTravelStep: (travelStepModel) => {
         let { cls } = Entities.travelStep
         return new Promise((res, rej) => {

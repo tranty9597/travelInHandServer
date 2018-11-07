@@ -1,7 +1,7 @@
 import express from "express"
 
 import { TravelStepController } from "../../controllers"
-import { errorHandle } from "../../utils";
+
 
 
 const router = express.Router();
@@ -9,7 +9,7 @@ const router = express.Router();
 router.get('/api/travelStep/get', (req, res) => {
     TravelStepController.getTravelSteps(req).then(data => {
         res.json(data)
-    }).catch(err => errorHandle.catchEx(err, res))
+    }).catch(err => res.json(err))
 })
 
 router.get('/api/travelStep/getDetail', (req, res) => {
@@ -27,7 +27,12 @@ router.get('/api/travelStep/getHistoryDetail', (req, res) => {
 router.post('/api/travelStep/create', (req, res) => {
     TravelStepController.createTravelStep(req, res).then(data => {
         res.json(data)
-    }).catch(err => errorHandle.catchEx(err, res))
+    }).catch(err => res.json(err))
+})
+router.put('/api/travelStep/changeStatus', (req, res) => {
+    TravelStepController.changeStatus(req, res).then(data => {
+        res.json(data)
+    }).catch(err => res.json(err))
 })
 
 export default router;

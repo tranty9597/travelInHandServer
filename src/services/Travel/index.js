@@ -9,6 +9,15 @@ function handleQueryRs(err, rs, res, rej) {
     res(rs);
 }
 const TravelService = {
+    changeStatus: (id, status) =>{
+        let { cls } = Entities.travel
+        return new Promise((res, rej) => {
+
+            let queryInst = `UPDATE ${Entities.travel.name} SET ${cls.status} = ${status} WHERE ${cls.id} = ${id}`
+            console.log("ddd", queryInst)
+            connection.query(queryInst, (err, rs, fields) => handleQueryRs(err, rs, res, rej))
+        })
+    },
     createTravel: (travelModel) => {
         let { cls } = Entities.travel
         return new Promise((res, rej) => {
