@@ -56,7 +56,29 @@ const TravelService = {
             });
             
         })
+    },
+    getActiveTravel: (username) => {
+        let { cls } = Entities.travel
+        return new Promise((res, rej) => {
+
+            let whereClause = username ? `AND ${cls.username} = '${username}' AND ${cls.status} = 0` : ''
+
+            connection.query(`SELECT * FROM ${Entities.travel.name} WHERE 1 = 1 ${whereClause}`, (err, rs) => {
+                if (err) {
+                    rej(err)
+                }
+
+                let travels = rs.map(t => {
+                    return new Travel(t[cls.id], t[cls.username], t[cls.dateCreated], t[cls.travelNm], t[cls.travelDes], t[cls.status]);
+                })
+
+                res(travels[0])
+            });
+            
+        })
     }
+
+
 }
 
 

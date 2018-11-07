@@ -37,6 +37,15 @@ const TravelController = {
                 rej(err)
             })
         })
+    },
+    getActiveTravel: (req) => {
+        return new Promise((res, rej) => {
+            TravelService.getActiveTravel(req.query.username).then(rs => {
+                res(new BaseResult(200, "Success", false, rs))
+            }).catch(err => {
+                rej(err)
+            })
+        })
     }
 }
 
