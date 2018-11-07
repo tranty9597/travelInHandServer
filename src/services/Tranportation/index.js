@@ -31,7 +31,9 @@ const TranportationService = {
                         t[cls.transpotationNm],
                         t[cls.phone],
                         t[cls.openTime],
-                        t[cls.timeDistance]
+                        t[cls.timeDistance], 
+                        t[cls.price],
+                        t[cls.description]
                     );
                 }))
             });
@@ -55,7 +57,9 @@ const TranportationService = {
                         t[cls.transpotationNm],
                         t[cls.phone],
                         t[cls.openTime],
-                        t[cls.timeDistance])
+                        t[cls.timeDistance], 
+                        t[cls.price],
+                        t[cls.description])
 
                 ImageServices.getImageByOwnerId(t[cls.id]).then(images =>{
                     res({...transpotation, images})

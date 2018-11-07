@@ -80,7 +80,8 @@ export const Entities = {
             phone: "PHONE",
             openTime: "OPEN_TIME",
             timeDistance: "TIME_DISTANCE",
-
+            price: "PRICE",
+            description: 'DESCRIPTION',
         }
     },
     restaurant: {
@@ -132,6 +133,6 @@ export const Entities = {
 export const Configs = {
     host: "localhost",
     user: "root",
-    password: "root@12345",
+    password: "12345678",
     database: "TravelInHand"
 }
